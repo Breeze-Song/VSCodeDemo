@@ -83,10 +83,19 @@ async function getfolderpath_Bindgen() {
 }
 
 async function run() {
+    const inputData = {
+        input_dir: document.getElementById('Input Directory').value,
+        output_dir: document.getElementById('Output Directory').value,
+        c2rust_dir: document.getElementById('C2Rust Directory').value,
+        bindgen_dir: document.getElementById('Bindgen Directory').value
+    };
+
     try {
         // 发送请求到后端API
         const response = await fetch('http://localhost:5000/run', {
-            method: 'POST'
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(inputData)
         });
         const data = await response.json();
         // 将换行符 \n 替换为 <br> 标签

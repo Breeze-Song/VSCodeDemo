@@ -22,7 +22,7 @@ def getfolderpath():
     root.attributes('-topmost', True)  # 设置对话框置顶
     folder_path = filedialog.askdirectory(
         title="选择文件夹",
-        initialdir="/"  # 初始路径设为当前工作目录
+        initialdir=Path(__file__).parent.parent.parent.parent  # 初始路径设为当前工作目录
     )
     root.destroy()
     return jsonify({'result': folder_path})
@@ -34,16 +34,22 @@ from pathlib import Path
 
 @app.route('/run', methods=['POST'])
 def run():
-
+    data = request.get_json()
+    input_dir = data.get('input_dir')
+    output_dir = data.get('output_dir')
+    c2rust_dir = data.get('c2rust_dir')
+    bindgen_dir = data.get('bindgen_dir')
     # 获取当前项目的绝对路径
     project_root = Path(__file__).parent  # 根据实际情况调整层级
     script_path = os.path.join(project_root, "app.py")  # 构建 app.py 的完整路径
 
-    # return jsonify({'result':  script_path})
-    
+    # 构造命令行参数
     args = [
-        "-n", "123",         # 其他参数
-        "--verbose"
+        "-i", input_dir,
+        "-o", output_dir,
+        "-c", c2rust_dir,
+        "-b", bindgen_dir,
+        "--show"
     ]
     # 启动脚本（使用当前Python解释器）
     result = subprocess.run(
