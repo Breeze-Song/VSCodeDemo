@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>Demo</h1>
+    <button id="actionButton">点击触发事件</button>
+    <script src="script.js"></script>
+
+    <h1>平方计算器</h1>
+    <input type="number" id="inputNumber" placeholder="输入数字">
+    <button onclick="calculateSquare()">计算平方</button>
+    <p id="result"></p>
+
+    <h1>输入目录</h1>
+    <input type="text" id="Input Directory" placeholder="处理的C代码文件目录">
+    <button onclick="getfolderpath()">选择</button>
+
+    <h1>输出目录</h1>
+    <input type="text" id="Output Directory" placeholder="结果存放目录">
+    <button onclick="getfolderpath_output()">选择</button>
+
+    <h1>C2Rust目录</h1>
+    <input type="text" id="C2Rust Directory" placeholder="C2Rusts生成目录">
+    <button onclick="getfolderpath_C2Rust()">选择</button>
+
+    <h1>Bindgen目录</h1>
+    <input type="text" id="Bindgen Directory" placeholder="bindgen_ramfs">
+    <button onclick="getfolderpath_Bindgen()">选择</button>
+    
+    <h1>运行确认</h1>
+    <button onclick="run()">确认</button>
+    <p id="runresult"></p>
+
+</body>
+
+</html>
