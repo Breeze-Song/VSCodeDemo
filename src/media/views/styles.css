@@ -1,16 +1,44 @@
-.body {
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
     padding: 20px;
     background-color: var(--vscode-editor-background);
 }
 
+.card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
 .button {
     padding: 10px 20px;
-    background-color: var(--vscode-button-background);
-    color: var(--vscode-button-foreground);
+    background: linear-gradient(135deg, #6e8efb, #4a6cf7);
+    color: #fff;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
 }
 
 .button:hover {
-    background-color: var(--vscode-button-hoverBackground);
+    background: linear-gradient(135deg, #4a6cf7, #6e8efb);
+    transform: translateY(-2px);
+}
+
+.run-button {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+}
+
+.run-button:hover {
+    background: linear-gradient(135deg, #45a049, #4CAF50);
+}
+
+@media (max-width: 768px) {
+    .button {
+        padding: 8px 16px;
+    }
 }
