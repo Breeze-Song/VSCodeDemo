@@ -1,0 +1,3 @@
+fn ramfs_free_fc(fc: &mut fs_context) {
+    kfree(fc.s_fs_info);
+}

@@ -1,0 +1,22 @@
+pub fn ramfs_parse_param(fc: &mut fs_context, param: &mut fs_parameter) -> i32 {
+    let mut result = fs_parse_result::default();
+    let fsi = &mut fc.s_fs_info;
+    let mut opt = fs_parse(fc, ramfs_fs_parameters, param, &mut result);
+    if opt == -ENOPARAM {
+        opt = vfs_parse_fs_param_source(fc, param);
+        if opt != -ENOPARAM {
+            return opt;
+        }
+        return 0;
+    }
+    if opt < 0 {
+        return opt;
+    }
+    match opt {
+        Opt_mode => {
+            fsi.mount_opts.mode = result.uint_32 & S_IALLUGO;
+        }
+        _ => {}
+    }
+    0
+}

@@ -1,6 +1,3 @@
-//External Variable
-#define current get_current()
-
 //the code to be converted
 static unsigned long ramfs_mmu_get_unmapped_area(struct file *file,
 		unsigned long addr, unsigned long len, unsigned long pgoff,

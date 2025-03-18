@@ -5,14 +5,14 @@ struct inode *ramfs_get_inode(struct super_block *sb,
 #define PAGE_SIZE		(_AC(1,UL) << PAGE_SHIFT)
 
 //External Variable
-#define PAGE_SHIFT		12
-
-//External Variable
 #if BITS_PER_LONG==32
 #define MAX_LFS_FILESIZE	((loff_t)ULONG_MAX << PAGE_SHIFT)
 #elif BITS_PER_LONG==64
 #define MAX_LFS_FILESIZE 	((loff_t)LLONG_MAX)
 #endif
+
+//External Variable
+#define PAGE_SHIFT		12
 
 //External Variable
 struct ramfs_fs_info {

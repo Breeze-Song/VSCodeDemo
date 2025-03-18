@@ -31,7 +31,7 @@ import subprocess
 import sys
 import os
 from pathlib import Path
-
+from flask import Response
 @app.route('/run', methods=['POST'])
 def run():
     data = request.get_json()
@@ -57,22 +57,43 @@ def run():
     ]
     #本地python环境
     python_path = "D:/Programs/anaconda3/envs/C2Rust/python.exe" 
-    # 启动脚本（使用当前Python解释器）
-    result = subprocess.run(
-        [python_path, script_path] + args,
-        cwd=root_path,  # 工作目录
-        capture_output=True,  # 捕获输出
-        text=True             # 以文本形式返回结果
+
+    #启动子进程并合并stderr到stdout
+    proc = subprocess.Popen(
+        [python_path,"-u", script_path] + args,
+        cwd=root_path,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,  # 将标准错误合并到标准输出
+        text=True,
+        bufsize=1,                # 行缓冲模式
+        universal_newlines=True
     )
 
-    # 检查执行结果
-    if result.returncode == 0:
-        return jsonify({'result':  result.stdout})
-    else:
-        return jsonify({'result':  f"执行失败！:{result.stderr}"})
+    #SSE格式 
+    def generate():
+        # 实时流式读取输出
+        while proc.poll() is None:  # 当进程未结束时循环
+            line = proc.stdout.readline()
+            if line:
+                # 使用SSE格式发送数据（可选）
+                yield f"data: {line}\n\n"
         
+        # 读取进程结束后的剩余输出
+        for line in proc.stdout:
+            yield f"data: {line}\n\n"
+        
+        # 返回最终状态码
+        yield f"data: PROCESS_EXIT_CODE:{proc.returncode}\n\n"
 
-
+    # 返回流式响应
+    return Response(
+        generate(),
+        mimetype="text/event-stream",  # 使用Server-Sent Events格式
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no"  # 禁用Nginx缓冲
+        }
+    )
 
 if __name__ == '__main__':
     app.run(port=5000)

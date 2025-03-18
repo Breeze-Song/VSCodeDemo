@@ -1,0 +1,9 @@
+pub fn ramfs_create(
+    mnt_userns: &mut user_namespace,
+    dir: &mut inode,
+    dentry: &mut dentry,
+    mode: umode_t,
+    excl: bool,
+) -> i32 {
+    ramfs_mknod(&init_user_ns, dir, dentry, mode | S_IFREG, 0)
+}
