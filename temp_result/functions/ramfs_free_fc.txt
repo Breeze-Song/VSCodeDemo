@@ -1,0 +1,5 @@
+//the code to be converted
+static void ramfs_free_fc(struct fs_context *fc)
+{
+	kfree(fc->s_fs_info);
+}

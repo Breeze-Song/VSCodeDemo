@@ -25,7 +25,7 @@ def getfolderpath():
         initialdir=Path(__file__).parent.parent.parent.parent  # 初始路径设为当前工作目录
     )
     root.destroy()
-    return jsonify({'result': folder_path})
+    return jsonify({'result': folder_path + '/'})
 
 import subprocess
 import sys
@@ -37,26 +37,34 @@ def run():
     data = request.get_json()
     input_dir = data.get('input_dir')
     output_dir = data.get('output_dir')
-    c2rust_dir = data.get('c2rust_dir')
+    linux_dir = data.get('linux_dir')
     bindgen_dir = data.get('bindgen_dir')
+    llms = data.get('llms')
     # 获取当前项目的绝对路径
-    project_root = Path(__file__).parent  # 根据实际情况调整层级
-    script_path = os.path.join(project_root, "app.py")  # 构建 app.py 的完整路径
+    project_root = Path(__file__).parent.parent.parent.parent  # 根据实际情况调整层级
+    script_path = os.path.join(project_root, "Linux_Rust", "run.py")  # 构建 app.py 的完整路径\
+    root_path = os.path.join(project_root, "Linux_Rust")
 
     # 构造命令行参数
     args = [
         "-i", input_dir,
         "-o", output_dir,
-        "-c", c2rust_dir,
+        "-l", linux_dir,
         "-b", bindgen_dir,
-        "--show"
+        "-e",'10',
+        "-g",'3',
+        "-m",llms,
     ]
+    #本地python环境
+    python_path = "D:/Programs/anaconda3/envs/C2Rust/python.exe" 
     # 启动脚本（使用当前Python解释器）
     result = subprocess.run(
-        [sys.executable, script_path] + args,
+        [python_path, script_path] + args,
+        cwd=root_path,  # 工作目录
         capture_output=True,  # 捕获输出
         text=True             # 以文本形式返回结果
     )
+
     # 检查执行结果
     if result.returncode == 0:
         return jsonify({'result':  result.stdout})

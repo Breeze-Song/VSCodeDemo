@@ -1,0 +1,4 @@
+static int __init init_ramfs_fs(void)
+{
+	return register_filesystem(&ramfs_fs_type);
+}

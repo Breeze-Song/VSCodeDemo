@@ -1,0 +1,21 @@
+//Called Function
+static inline void file_accessed(struct file *file)
+{
+	if (!(file->f_flags & O_NOATIME))
+		touch_atime(&file->f_path);
+}//External Variable
+#define VM_MAYSHARE	0x00000080
+
+//External Variable
+#define VM_SHARED	0x00000008
+
+//the code to be converted
+static int ramfs_nommu_mmap(struct file *file, struct vm_area_struct *vma)
+{
+	if (!(vma->vm_flags & (VM_SHARED | VM_MAYSHARE)))
+		return -ENOSYS;
+
+	file_accessed(file);
+	vma->vm_ops = &generic_file_vm_ops;
+	return 0;
+}

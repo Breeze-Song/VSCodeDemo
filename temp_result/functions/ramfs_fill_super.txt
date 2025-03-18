@@ -1,0 +1,40 @@
+//Called Function
+struct inode *ramfs_get_inode(struct super_block *sb,
+				const struct inode *dir, umode_t mode, dev_t dev)
+//External Variable
+#define PAGE_SIZE		(_AC(1,UL) << PAGE_SHIFT)
+
+//External Variable
+#define PAGE_SHIFT		12
+
+//External Variable
+#if BITS_PER_LONG==32
+#define MAX_LFS_FILESIZE	((loff_t)ULONG_MAX << PAGE_SHIFT)
+#elif BITS_PER_LONG==64
+#define MAX_LFS_FILESIZE 	((loff_t)LLONG_MAX)
+#endif
+
+//External Variable
+struct ramfs_fs_info {
+	struct ramfs_mount_opts mount_opts;
+}
+//the code to be converted
+static int ramfs_fill_super(struct super_block *sb, struct fs_context *fc)
+{
+	struct ramfs_fs_info *fsi = sb->s_fs_info;
+	struct inode *inode;
+
+	sb->s_maxbytes		= MAX_LFS_FILESIZE;
+	sb->s_blocksize		= PAGE_SIZE;
+	sb->s_blocksize_bits	= PAGE_SHIFT;
+	sb->s_magic		= RAMFS_MAGIC;
+	sb->s_op		= &ramfs_ops;
+	sb->s_time_gran		= 1;
+
+	inode = ramfs_get_inode(sb, NULL, S_IFDIR | fsi->mount_opts.mode, 0);
+	sb->s_root = d_make_root(inode);
+	if (!sb->s_root)
+		return -ENOMEM;
+
+	return 0;
+}

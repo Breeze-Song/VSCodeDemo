@@ -56,14 +56,14 @@ async function getfolderpath_output() {
     }
 }
 
-async function getfolderpath_C2Rust() {
+async function getfolderpath_Linux() {
     try {
         // 发送请求到后端API
         const response = await fetch('http://localhost:5000/getfolderpath', {
             method: 'POST'
         });
         const data = await response.json();
-        document.getElementById('C2Rust Directory').value = `${data.result}`;
+        document.getElementById('Linux Directory').value = `${data.result}`;
     } catch (error) {
         console.error('请求失败:', error);
     }
@@ -86,8 +86,9 @@ async function run() {
     const inputData = {
         input_dir: document.getElementById('Input Directory').value,
         output_dir: document.getElementById('Output Directory').value,
-        c2rust_dir: document.getElementById('C2Rust Directory').value,
-        bindgen_dir: document.getElementById('Bindgen Directory').value
+        linux_dir: document.getElementById('Linux Directory').value,
+        bindgen_dir: document.getElementById('Bindgen Directory').value,
+        llms: document.getElementById('LLMs-select').value
     };
 
     try {

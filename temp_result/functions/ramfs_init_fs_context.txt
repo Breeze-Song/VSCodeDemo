@@ -1,0 +1,21 @@
+//External Variable
+#define GFP_KERNEL	(__GFP_RECLAIM | __GFP_IO | __GFP_FS)
+
+//External Variable
+struct ramfs_fs_info {
+	struct ramfs_mount_opts mount_opts;
+}
+//the code to be converted
+int ramfs_init_fs_context(struct fs_context *fc)
+{
+	struct ramfs_fs_info *fsi;
+
+	fsi = kzalloc(sizeof(*fsi), GFP_KERNEL);
+	if (!fsi)
+		return -ENOMEM;
+
+	fsi->mount_opts.mode = RAMFS_DEFAULT_MODE;
+	fc->s_fs_info = fsi;
+	fc->ops = &ramfs_context_ops;
+	return 0;
+}
