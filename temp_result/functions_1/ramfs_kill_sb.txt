@@ -1,4 +1,0 @@
-fn ramfs_kill_sb(sb: &mut super_block) {
-    kfree(sb.s_fs_info);
-    kill_litter_super(sb);
-}

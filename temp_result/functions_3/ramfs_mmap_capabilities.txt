@@ -1,3 +1,0 @@
-fn ramfs_mmap_capabilities(file: *mut file) -> u32 {
-    NOMMU_MAP_DIRECT | NOMMU_MAP_COPY | NOMMU_MAP_READ | NOMMU_MAP_WRITE | NOMMU_MAP_EXEC
-}

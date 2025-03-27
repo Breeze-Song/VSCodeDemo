@@ -1,3 +1,0 @@
-fn ramfs_get_tree(fc: &mut fs_context) -> i32 {
-    get_tree_nodev(fc, ramfs_fill_super)
-}

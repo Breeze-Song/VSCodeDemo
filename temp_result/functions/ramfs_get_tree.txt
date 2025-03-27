@@ -1,5 +1,0 @@
-//the code to be converted
-static int ramfs_get_tree(struct fs_context *fc)
-{
-	return get_tree_nodev(fc, ramfs_fill_super);
-}

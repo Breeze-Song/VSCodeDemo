@@ -1,3 +1,0 @@
-pub fn ramfs_mmu_get_unmapped_area(file: *mut file, addr: usize, len: usize, pgoff: usize, flags: usize) -> usize {
-    current.mm.get_unmapped_area(file, addr, len, pgoff, flags)
-}

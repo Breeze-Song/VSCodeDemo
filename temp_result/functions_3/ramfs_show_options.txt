@@ -1,7 +1,0 @@
-fn ramfs_show_options(m: &mut seq_file, root: &dentry) -> i32 {
-    let fsi = &root.d_sb.s_fs_info;
-    if fsi.mount_opts.mode != RAMFS_DEFAULT_MODE {
-        seq_printf(m, ",mode=%o", fsi.mount_opts.mode);
-    }
-    0
-}

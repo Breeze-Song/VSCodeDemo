@@ -39,11 +39,12 @@ const vscode = __importStar(require("vscode"));
 const path = __importStar(require("path"));
 const fs = __importStar(require("fs"));
 const child_process_1 = require("child_process");
+const Treeview_1 = require("./Treeview");
 let flaskProcess;
 function activate(context) {
     // 注册Webview视图提供者
     const provider = new TestDemoViewProvider(context.extensionUri);
-    context.subscriptions.push(vscode.window.registerWebviewViewProvider('testdemo', provider));
+    context.subscriptions.push(vscode.window.registerWebviewViewProvider('htmldemo', provider));
     // 启动Flask服务器
     const serverPath = path.join(__dirname, '..', 'src', 'media', 'views', 'server.py');
     flaskProcess = (0, child_process_1.exec)(`python ${serverPath}`, (error) => {
@@ -60,6 +61,11 @@ function activate(context) {
             }
         }
     });
+    // 注册TreeDataProvider以显示文件结构
+    const feProvider = new Treeview_1.FileExplorerProvider();
+    vscode.window.registerTreeDataProvider('fileexplorer', feProvider);
+    feProvider.rootUri = vscode.Uri.file(path.join(context.extensionPath));
+    feProvider.refresh();
 }
 // This method is called when your extension is deactivated
 function deactivate() {
@@ -75,11 +81,11 @@ class TestDemoViewProvider {
     }
     // 获取外部 HTML 内容
     _getHtmlContent(webview) {
-        // 1. 获取 HTML 文件路径
+        // 获取 HTML 文件路径
         const htmlPath = path.join(this._extensionUri.fsPath, 'src', 'media', 'views', 'demo.html');
-        // 2. 读取 HTML 文件内容
+        // 读取 HTML 文件内容
         let htmlContent = fs.readFileSync(htmlPath, 'utf-8');
-        // 3. 替换资源路径为 Webview 可访问的 URI
+        // 替换资源路径为 Webview 可访问的 URI
         const resourceUri = webview.asWebviewUri(vscode.Uri.joinPath(this._extensionUri, 'src', 'media'));
         return htmlContent
             .replace(/href="styles.css"/g, `href="${resourceUri}/views/styles.css"`)

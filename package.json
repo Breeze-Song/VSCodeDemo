@@ -12,24 +12,41 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
-      "viewsContainers": {
+    "viewsContainers": {
       "activitybar": [
         {
-          "id": "testdemo",
-          "title": "VSCODE VIEW DEMO",
+          "id": "HTMLDEMO",
+          "title": "html界面",
           "icon": "src/media/views/icon.svg"
         }
-      ]
+
+
+      ],
+      "panel": [        
+        {
+        "id": "FILEDIR",
+        "title": "目标目录树",
+        "icon": "src/media/views/drink.svg"
+      }]
+
     },
+    
     "views": {
-      "testdemo": [
+      "HTMLDEMO": [
         {
           "type": "webview",
-          "id": "testdemo",
-          "name": "demo page"
+          "id": "htmldemo",
+          "name": "html界面"
+        }
+      ],
+      "FILEDIR": [
+        {
+          "id": "fileexplorer",
+          "name": "treelist"
         }
       ]
     }
+
   },
   "files": [
     "src/media/**/*.html",

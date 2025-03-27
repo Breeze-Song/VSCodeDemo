@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 import { exec, ChildProcess } from 'child_process';
+import {FileExplorerProvider, FileItem } from './Treeview';
 
 let flaskProcess: ChildProcess | undefined;
 
@@ -9,7 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
     // 注册Webview视图提供者
     const provider = new TestDemoViewProvider(context.extensionUri);
     context.subscriptions.push(
-        vscode.window.registerWebviewViewProvider('testdemo', provider)
+        vscode.window.registerWebviewViewProvider('htmldemo', provider)
     );
 
     // 启动Flask服务器
@@ -30,6 +31,14 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
+
+    // 注册TreeDataProvider以显示文件结构
+    const feProvider = new FileExplorerProvider();
+    vscode.window.registerTreeDataProvider('fileexplorer', feProvider);
+    feProvider.rootUri = vscode.Uri.file(path.join(context.extensionPath)); 
+    feProvider.refresh();
+
+
 }
 
 // This method is called when your extension is deactivated
@@ -44,11 +53,11 @@ class TestDemoViewProvider implements vscode.WebviewViewProvider {
     constructor(private readonly _extensionUri: vscode.Uri) { }
     // 获取外部 HTML 内容
     private _getHtmlContent(webview: vscode.Webview): string {
-        // 1. 获取 HTML 文件路径
+        // 获取 HTML 文件路径
         const htmlPath = path.join(this._extensionUri.fsPath, 'src','media', 'views', 'demo.html');
-        // 2. 读取 HTML 文件内容
+        // 读取 HTML 文件内容
         let htmlContent = fs.readFileSync(htmlPath, 'utf-8');
-        // 3. 替换资源路径为 Webview 可访问的 URI
+        // 替换资源路径为 Webview 可访问的 URI
         const resourceUri = webview.asWebviewUri(
             vscode.Uri.joinPath(this._extensionUri, 'src','media')
         );
@@ -57,14 +66,12 @@ class TestDemoViewProvider implements vscode.WebviewViewProvider {
             .replace(/src="script.js"/g, `src="${resourceUri}/views/script.js"`);
     }
     public resolveWebviewView(webviewView: vscode.WebviewView) {
-
         webviewView.webview.html = this._getHtmlContent(webviewView.webview);
         // 配置Webview选项
         webviewView.webview.options = {
             enableScripts: true,
             localResourceRoots: [this._extensionUri]
         };
-
         // 处理来自Webview的消息
         webviewView.webview.onDidReceiveMessage(message => {
             if (message.command === 'externalButtonClick') {
@@ -73,3 +80,4 @@ class TestDemoViewProvider implements vscode.WebviewViewProvider {
         });
     }
 }
+

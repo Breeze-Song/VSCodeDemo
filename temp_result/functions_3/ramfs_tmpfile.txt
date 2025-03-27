@@ -1,8 +1,0 @@
-pub fn ramfs_tmpfile(mnt_userns: &mut user_namespace, dir: &mut inode, file: &mut file, mode: umode_t) -> i32 {
-    let inode = match ramfs_get_inode(&mut dir.i_sb, dir, mode, 0) {
-        Some(inode) => inode,
-        None => return -ENOSPC,
-    };
-    d_tmpfile(file, inode);
-    finish_open_simple(file, 0)
-}

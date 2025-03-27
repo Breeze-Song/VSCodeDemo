@@ -1,3 +1,0 @@
-fn init_ramfs_fs() -> i32 {
-    register_filesystem(&ramfs_fs_type)
-}
