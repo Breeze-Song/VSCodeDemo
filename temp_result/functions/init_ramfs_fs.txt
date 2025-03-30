@@ -1,8 +1,0 @@
-//External Variable
-#define __init		__section(".init.text") __cold  __latent_entropy __noinitretpoline
-
-//the code to be converted
-static int __init init_ramfs_fs(void)
-{
-	return register_filesystem(&ramfs_fs_type);
-}

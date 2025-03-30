@@ -1,6 +1,0 @@
-//the code to be converted
-static void ramfs_kill_sb(struct super_block *sb)
-{
-	kfree(sb->s_fs_info);
-	kill_litter_super(sb);
-}
