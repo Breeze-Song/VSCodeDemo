@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            min-width: 300px; /* 设置最小宽度 */
+        }
+    </style>
 </head>
 <body>
     <script src="script.js"></script>
@@ -42,10 +47,11 @@
         </select>
     </div>
 
-    <div class="card">
+    <div class="card_run">
         <h1>运行确认</h1>
-        <button class="run-button" onclick="run()">确认</button>
-        <p id="runresult"></p>
+        <button class="run-button" onclick="run()">开始执行</button>
+        <h2>输出结果</h1>
+        <div class="output-box" id="runresult"></div>
     </div>
 
 </body>

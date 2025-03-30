@@ -1,3 +1,9 @@
+h1 {
+    font-family: 'KaiTi', 'STKaiti', 'SimKai', serif; /* 使用行楷字体 */
+    color: black; /* 设置文字颜色为黑色 */
+    font-weight: bold;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
@@ -14,6 +20,37 @@ body {
     width: 300px;
     max-width: 100%;
     box-sizing: border-box; /* 包含 padding 和 border 在内的宽度计算 */
+}
+
+.card_run {
+    background: hsl(0, 0%, 99%);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 300px;
+    max-width: 100%;
+    box-sizing: border-box; /* 包含 padding 和 border 在内的宽度计算 */
+}
+
+.output-box {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    height: 200px; /* 设置固定的高度 */
+    overflow-y: auto; /* 允许垂直滚动 */
+    font-family: monospace; /* 使用等宽字体，适合输出内容 */
+    white-space: pre-wrap; /* 保留空白符和换行 */
+    word-wrap: break-word; /* 允许长单词换行 */
+}
+
+#runresult {
+    color: black; /* 设置文字颜色为黑色 */
+    font-family: monospace; /* 使用等宽字体 */
+    white-space: nowrap; /* 保留空白符和换行 */
+    word-wrap: break-word; /* 允许长单词换行 */
+    overflow-x: auto; /* 显示横向滚动条 */
 }
 
 .button {
@@ -44,4 +81,4 @@ body {
     .button {
         padding: 8px 16px;
     }
-}
+} 
