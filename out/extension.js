@@ -61,13 +61,7 @@ function activate(context) {
             }
         }
     });
-    // 注册TreeDataProvider以显示文件结构
-    const feProvider = new Treeview_1.FileExplorerProvider();
-    vscode.window.registerTreeDataProvider('fileexplorer', feProvider);
-    feProvider.rootUri = vscode.Uri.file(path.join(context.extensionPath));
-    feProvider.refresh();
 }
-// This method is called when your extension is deactivated
 function deactivate() {
     if (flaskProcess) {
         flaskProcess.kill();
@@ -98,10 +92,37 @@ class TestDemoViewProvider {
             enableScripts: true,
             localResourceRoots: [this._extensionUri]
         };
+        console.log("webview 配置完成");
         // 处理来自Webview的消息
         webviewView.webview.onDidReceiveMessage(message => {
-            if (message.command === 'externalButtonClick') {
-                vscode.window.showInformationMessage('按钮被点击了！');
+            console.log("Received message from webview:\n command:", message.command, "\n text:", message.data);
+            if (message.command === 'open_result_dir') {
+                // vscode.window.showInformationMessage('按钮被点击了！');
+                // 动态创建并注册 TreeDataProvider
+                const feProvider = new Treeview_1.FileExplorerProvider();
+                vscode.window.registerTreeDataProvider('fileexplorer', feProvider);
+                if (message.data === "") {
+                    vscode.window.showErrorMessage('请输入正确的路径！');
+                    return;
+                }
+                // 设置根路径
+                feProvider.rootUri = vscode.Uri.file(path.join(message.data));
+                feProvider.refresh();
+                // 动态设置条件，显示 view
+                vscode.commands.executeCommand('setContext', 'fileexplorer.enabled', true);
+                // 动态显示 panel
+                vscode.commands.executeCommand('workbench.view.extension.FILEDIR');
+                // 监听文件变化
+                const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(message.data, '**/*'));
+                watcher.onDidChange(() => {
+                    feProvider.refresh();
+                });
+                watcher.onDidCreate(() => {
+                    feProvider.refresh();
+                });
+                watcher.onDidDelete(() => {
+                    feProvider.refresh();
+                });
             }
         });
     }

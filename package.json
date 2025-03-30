@@ -24,13 +24,15 @@
       ],
       "panel": [        
         {
-        "id": "FILEDIR",
-        "title": "目标目录树",
-        "icon": "src/media/views/drink.svg"
-      }]
+          "id": "FILEDIR",
+          "title": "目标目录树",
+          "icon": "src/media/views/drink.svg"
+        }
+
+      ]
 
     },
-    
+
     "views": {
       "HTMLDEMO": [
         {
@@ -42,10 +44,12 @@
       "FILEDIR": [
         {
           "id": "fileexplorer",
-          "name": "treelist"
+          "name": "treelist",
+          "when": "fileexplorer.enabled"
         }
       ]
     }
+
 
   },
   "files": [

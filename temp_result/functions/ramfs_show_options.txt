@@ -1,0 +1,13 @@
+//External Variable
+struct ramfs_fs_info {
+	struct ramfs_mount_opts mount_opts;
+}
+//the code to be converted
+static int ramfs_show_options(struct seq_file *m, struct dentry *root)
+{
+	struct ramfs_fs_info *fsi = root->d_sb->s_fs_info;
+
+	if (fsi->mount_opts.mode != RAMFS_DEFAULT_MODE)
+		seq_printf(m, ",mode=%o", fsi->mount_opts.mode);
+	return 0;
+}

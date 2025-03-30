@@ -25,7 +25,14 @@ def getfolderpath():
         initialdir=Path(__file__).parent.parent.parent.parent  # 初始路径设为当前工作目录
     )
     root.destroy()
-    return jsonify({'result': folder_path + '/'})
+    if not folder_path:
+        return jsonify({'result': ''})
+    if folder_path.endswith('/'):
+        folder_path = folder_path
+    else:
+        folder_path = folder_path + '/'
+
+    return jsonify({'result': folder_path})
 
 import subprocess
 import sys

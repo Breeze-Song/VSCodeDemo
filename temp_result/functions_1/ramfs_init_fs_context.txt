@@ -1,0 +1,11 @@
+pub fn ramfs_init_fs_context(fc: &mut fs_context) -> i32 {
+    let fsi = match Box::try_new(Default::default()) {
+        Ok(b) => b,
+        Err(_) => return -ENOMEM,
+    };
+    let mut fsi = fsi;
+    fsi.mount_opts.mode = RAMFS_DEFAULT_MODE;
+    fc.s_fs_info = Box::into_raw(fsi);
+    fc.ops = &ramfs_context_ops;
+    0
+}

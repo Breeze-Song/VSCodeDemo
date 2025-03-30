@@ -11,6 +11,9 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin-bottom: 20px;
+    width: 300px;
+    max-width: 100%;
+    box-sizing: border-box; /* 包含 padding 和 border 在内的宽度计算 */
 }
 
 .button {
