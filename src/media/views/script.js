@@ -118,8 +118,11 @@ async function run() {
 
         while (true) {
             const { done, value } = await reader.read();
-            if (done) 
+            if (done)
+            {
                 break;
+            }
+                
 
             // 解码并处理数据块
             buffer += decoder.decode(value, { stream: true });
