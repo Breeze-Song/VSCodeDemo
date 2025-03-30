@@ -82,7 +82,14 @@ async function getfolderpath_Bindgen() {
     }
 }
 
-
+//显示进度条
+function showProgress() {
+    document.getElementById('progressbar_div').style.display = 'flex'; // 保持 flex 布局
+  }
+// 隐藏进度条
+function hideProgress() {
+    document.getElementById('progressbar_div').style.display = 'none';
+  }
 //保留缓冲区
 async function run() {
     const inputData = {
@@ -92,7 +99,9 @@ async function run() {
         bindgen_dir: document.getElementById('Bindgen Directory').value,
         llms: document.getElementById('LLMs-select').value
     };
-    
+
+    showProgress();
+
     // 清空之前的结果
     const outputElement = document.getElementById('runresult');
     outputElement.innerHTML = '';

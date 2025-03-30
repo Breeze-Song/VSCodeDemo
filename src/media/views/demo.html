@@ -51,7 +51,11 @@
         <h1>运行确认</h1>
         <button class="run-button" onclick="run()">开始执行</button>
         <h2>输出结果</h1>
-        <div class="output-box" id="runresult"></div>
+        <div class="output-box" id="runresult" style="display: flex; align-items: center; gap: 10px;"></div>
+        <div  id = "progressbar_div" hidden>
+            <font  color = "black" >处理进度：</font>
+            <progress id="progressbar" value="0" max="100" style="width: 190px; height: 20px;"></progress>
+        </div>
     </div>
 
 </body>
