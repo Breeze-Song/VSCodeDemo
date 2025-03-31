@@ -1,14 +1,42 @@
 h1 {
-    font-family: 'KaiTi', 'STKaiti', 'SimKai', serif; /* 使用行楷字体 */
-    color: black; /* 设置文字颜色为黑色 */
-    font-weight: bold;
+    color: #2d3748;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    border-left: 4px solid #4299e1;
+    padding-left: 10px;
+  }
+
+h2 {
+    color: #2d3748;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    border-left: 4px solid #4299e1;
+    padding-left: 10px;
+}
+
+input {
+    width: 70%;
+    /* padding: 8px 12px; */
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #63b3ed;
+    outline: none;
+  }
+
+button:hover {
+    opacity: 0.9;
 }
 
 body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
     padding: 20px;
-    background-color: var(--vscode-editor-background);
+    background: #f0f2f5;
+    max-width: 400px;
 }
 
 .card {
@@ -16,11 +44,15 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     width: 300px;
     max-width: 100%;
     box-sizing: border-box; /* 包含 padding 和 border 在内的宽度计算 */
 }
+
+/* .card:hover {
+    transform: translateY(-5px);
+  } */
 
 .card_run {
     background: hsl(0, 0%, 99%);
@@ -62,15 +94,19 @@ body {
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .button:hover {
     background: linear-gradient(135deg, #4a6cf7, #6e8efb);
     transform: translateY(-2px);
+    opacity: 0.9;
 }
 
 .run-button {
-    background: linear-gradient(135deg, #4CAF50, #45a049);
+    background: linear-gradient(135deg, #48bb78, #38a169);
 }
 
 .run-button:hover {

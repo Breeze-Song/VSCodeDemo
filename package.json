@@ -16,7 +16,7 @@
       "activitybar": [
         {
           "id": "HTMLDEMO",
-          "title": "html界面",
+          "title": "组件移植工具",
           "icon": "src/media/views/icon.svg"
         }
 
@@ -25,7 +25,7 @@
       "panel": [        
         {
           "id": "FILEDIR",
-          "title": "目标目录树",
+          "title": "结果目录",
           "icon": "src/media/views/drink.svg"
         }
 
@@ -38,7 +38,7 @@
         {
           "type": "webview",
           "id": "htmldemo",
-          "name": "html界面"
+          "name": "webview界面"
         }
       ],
       "FILEDIR": [
