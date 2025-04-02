@@ -106,14 +106,28 @@ class TestDemoViewProvider {
                     return;
                 }
                 // 设置根路径
-                feProvider.rootUri = vscode.Uri.file(path.join(message.data));
+                // feProvider.rootUri = vscode.Uri.file(path.join(message.data));
+                const tempDirPath = vscode.Uri.joinPath(this._extensionUri, "temp_result").fsPath;
+                try {
+                    if (!fs.existsSync(tempDirPath)) {
+                        fs.mkdirSync(tempDirPath, { recursive: true });
+                        console.log("目录已创建:", tempDirPath);
+                    }
+                    // 设置文件浏览器根路径
+                    feProvider.rootUri = vscode.Uri.file(path.join(tempDirPath));
+                }
+                catch (error) {
+                    vscode.window.showErrorMessage(`创建目录失败: ${error}`);
+                    return;
+                }
                 feProvider.refresh();
                 // 动态设置条件，显示 view
                 vscode.commands.executeCommand('setContext', 'fileexplorer.enabled', true);
                 // 动态显示 panel
                 vscode.commands.executeCommand('workbench.view.extension.FILEDIR');
                 // 监听文件变化
-                const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(message.data, '**/*'));
+                // const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(message.data, '**/*'));
+                const watcher = vscode.workspace.createFileSystemWatcher(new vscode.RelativePattern(tempDirPath, '**/*'));
                 watcher.onDidChange(() => {
                     feProvider.refresh();
                 });
